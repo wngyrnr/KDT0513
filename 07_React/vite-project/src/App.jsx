@@ -1,5 +1,7 @@
 import './App.css'
 import MyComponent from './components/MyComponent'
+import UseEffectTest from './components/useEffect/UseEffectTest'
+import UseMemotest from './components/useMemo/UseMemotest'
 import UseRefScroll from './components/useRef/UseRefScroll'
 import UseRefTest from './components/useRef/UseRefTest'
 import LandingPage from './components/useState/LandingPage'
@@ -15,7 +17,9 @@ function App() {
      {/* <LandingPage /> */}
      {/* <SignUp />/ */}
      {/* <UseRefTest />/ */}
-     <UseRefScroll />
+     {/* <UseRefScroll /> */}
+     {/* <UseMemotest /> */}
+     <UseEffectTest />
     </>
   )
 }
