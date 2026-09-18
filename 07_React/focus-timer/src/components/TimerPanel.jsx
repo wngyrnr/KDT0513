@@ -50,6 +50,11 @@ const TimerPanel = ({focusMinutes, onToggle, isRunning, onComplete}) => {
   const [label, setLabel] = useState('')
 
   const startedAtRef = useRef(null) //시작 값 보관용
+  const labelInputRef = useRef(null); //DOM접근용 -> 입력창 포커스
+
+  useEffect(() => {
+    if (!isRunning) labelInputRef.current.focus()
+  },[isRunning])
 
   useEffect(() => {
     setSecondsLeft(focusMinutes * 60)
@@ -100,6 +105,21 @@ const TimerPanel = ({focusMinutes, onToggle, isRunning, onComplete}) => {
     }
   },[isRunning, secondsLeft, label])
 
+  //space키로 토글, 입력창 포커스시 무시
+  useEffect(() => {
+
+    const spaceKeydown = (ev) => {
+      if (ev.code !== 'Space') return;
+      if (ev.target.tagName !== "BODY") return;
+
+      ev.preventDefault();
+      handleToggle();
+    }
+
+    window.addEventListener('keydown', spaceKeydown);
+    return () => window.removeEventListener('keydown', spaceKeydown);
+  }, [isRunning, onToggle])
+
 
   // 시작할때 시간을 기록, 일시정지 <-> 시작 변경
   const handleToggle = () =>{
@@ -126,6 +146,7 @@ const TimerPanel = ({focusMinutes, onToggle, isRunning, onComplete}) => {
         value={label}
         disabled={isRunning}
         onChange={(e) => setLabel(e.target.value)}
+        ref={labelInputRef}
       />
 
       <Buttons>

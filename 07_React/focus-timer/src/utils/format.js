@@ -7,3 +7,8 @@ export const formatClock = (iso) => {
 export const formatTime = (see) => {
     return `${String(Math.floor(see/60)).padStart(2, '0')}:${String(see%60).padStart(2, '0')}`;
 }
+
+//오늘날짜확인여부
+export const isToday = (iso) => {
+    return new Date(iso).toDateString() === new Date().toDateString();
+}

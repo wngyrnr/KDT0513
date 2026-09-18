@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import styled from 'styled-components'
 
@@ -7,6 +7,7 @@ import TimerPanel from "./components/TimerPanel"
 import StatsBar from './components/StatsBar'
 import SessionList from './components/SessionList'
 
+const STORAGE_KEY = "focus-sessions";
 
 const Container = styled.main`
   max-width: 600px;
@@ -30,7 +31,10 @@ const Title = styled.h1`
 
 
 function App() {
-  const [sessions, setSessions] = useState([])
+  const [sessions, setSessions] = useState(() => {
+    const storageSession = localStorage.getItem(STORAGE_KEY);
+    return storageSession ? JSON.parse(storageSession) : [];
+  })
   const [focusMinutes, setFocusMinutes] = useState(25);
   //시작했는지 멈췄는지 확인용 변수
   const [isRunning, setIsRunning] = useState(false);
@@ -42,8 +46,12 @@ function App() {
     setFocusMinutes(Number(minutes))
   }
 
+  useEffect(() => {
+    localStorage.setItem("STORAGE_KEY", JSON.stringify(sessions));
+  }, [sessions])
+
   const addSession = (session) =>{
-    setSessions(prev => [...prev, session])
+    setSessions(prev => [session, ...prev])
     setIsRunning(false)
   }
 
@@ -65,7 +73,7 @@ function App() {
         onComplete = {addSession}
       />
 
-      <StatsBar />
+      <StatsBar sessions={sessions}/>
       <SessionList sessions={sessions}/>
     </Container>
   )

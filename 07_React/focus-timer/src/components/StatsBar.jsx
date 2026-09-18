@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { isToday } from '../utils/format'
 
 const Bar = styled.div`
     padding: 12px 16px;
@@ -10,12 +11,15 @@ const Bar = styled.div`
     font-weight: 600;
 `
 
-const StatsBar = () => {
-  return (
-    <Bar>
-        오늘 3회 · 총 75분
-    </Bar>
-  )
+const StatsBar = ({sessions}) => {
+    const today = sessions.filter(s => isToday(s.endedAt));
+    const totalMinutes = today.reduce((sum, s) => sum + s.minutes, 0);
+
+    return (
+        <Bar>
+            오늘 {today.length}회 · 총 {totalMinutes}분
+        </Bar>
+    )
 }
 
 export default StatsBar
