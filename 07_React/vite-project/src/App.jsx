@@ -1,5 +1,9 @@
 import './App.css'
 import MyComponent from './components/MyComponent'
+import Header from './components/useContext/Header'
+import Profile from './components/useContext/Profile'
+import ThemeTest from './components/useContext/ThemeTest'
+import { UserProvider } from './components/useContext/UserContext'
 import UseEffectTest from './components/useEffect/UseEffectTest'
 import UseMemotest from './components/useMemo/UseMemotest'
 import UseRefScroll from './components/useRef/UseRefScroll'
@@ -19,7 +23,12 @@ function App() {
      {/* <UseRefTest />/ */}
      {/* <UseRefScroll /> */}
      {/* <UseMemotest /> */}
-     <UseEffectTest />
+     {/* <UseEffectTest /> */}
+     {/* <ThemeTest /> */}
+     <UserProvider>
+      <Header />
+      <Profile />
+     </UserProvider>
     </>
   )
 }
