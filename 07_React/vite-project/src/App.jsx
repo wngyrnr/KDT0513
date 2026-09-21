@@ -1,26 +1,30 @@
 import './App.css'
-import MyComponent from './components/MyComponent'
-import UseEffectTest from './components/useEffect/UseEffectTest'
-import UseMemotest from './components/useMemo/UseMemotest'
-import UseRefScroll from './components/useRef/UseRefScroll'
-import UseRefTest from './components/useRef/UseRefTest'
-import LandingPage from './components/useState/LandingPage'
-import SignUp from './components/useState/SignUp'
-import UseStateTest from './components/useState/UseStateTest'
+import { BrowserRouter, Link, Route, Routes } from 'react-router-dom'
+import Home from './pages/Home'
+import About from './pages/About'
+import Profile from './pages/Profile'
+import NotFound from './pages/NotFound'
+
+//BrowserRouter : 라우터의 최상위 컴포넌트(html의 history api를 활용해서 url변경)
+//Routes : 현재 브라우저 주소창의 URL과 가장 일치하는 하위 route를 찾아서 렌더링
 
 function App() {
 
   return (
-    <>
-     {/* <MyComponent message={"함수형 컴포넌트 입니다."}/> */}
-     {/* <UseStateTest /> */}
-     {/* <LandingPage /> */}
-     {/* <SignUp />/ */}
-     {/* <UseRefTest />/ */}
-     {/* <UseRefScroll /> */}
-     {/* <UseMemotest /> */}
-     <UseEffectTest />
-    </>
+    <BrowserRouter>
+      <nav style={{marginBottom: 20}}>
+        <Link to="/" style={{marginRight: 10}}>홈</Link>
+        <Link to="/about" style={{marginRight: 10}}>소개</Link>
+        <Link to="/profile/김개똥">김개똥프로필</Link>
+      </nav>
+      {/* 라우트설정 */}
+      <Routes>
+        <Route path='/' element={<Home />}/>
+        <Route path='/about' element={<About />}/>
+        <Route path='/profile/:username' element={<Profile />}/>
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
